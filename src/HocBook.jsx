@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import { hocBookBits } from './hocBookBits';
 
@@ -13,48 +13,43 @@ const numHocPages = hocBookBits.length;
 // }
 
 function createLeftPane(lessonText) {
-  console.log('doing createLeftPane of', lessonText);
-  return (
-    <div id="lefthand">
-    <div dangerouslySetInnerHTML={{__html: lessonText}} />
-    </div>
-  )
+  //console.log('doing createLeftPane of', lessonText);
+  return <div dangerouslySetInnerHTML={{__html: lessonText}} />
 }
 
 function createEditorPane(editorCode) {
-  let div = document.createElement('div');
-  div.setAttribute('id', 'righthand');
-  let parley = window.embedableParley.renderParley(div);
-  parley.resetChunks(editorCode.trim().split("\n") || [""]);
-  parley.onReady(function() {
-    //
-    parley.run();
-  });
+  //console.log('creating editorPane')
 
-  return div;
+  // create a ref, so that we can render into the DOM
+  const containerRef = useRef(null);
+
+  // if the ref has been rendered (i.e. - has a current node),
+  // render parley into it
+  useEffect(() => {
+    if (containerRef.current) {
+      let parley = window.embedableParley.renderParley(containerRef.current);
+      parley.resetChunks(editorCode.trim().split("\n") || [""]);
+      parley.onReady(parley.run);
+    }
+  }, [containerRef]);
+
+  return <div ref={containerRef} />
 }
 
 function createImagePane(imageConfig) {
-  return (
-    <div id="righthand">
-    <img src="{imageConfig}" />
-    </div>
-  )
+  //console.log('creating imagePane')
+  return <img src={imageConfig} />
 }
 
 function createVideoPane(videoConfig) {
-  return (
-    <div id="righthand">
-    <video src="{videoConfig}" />
-    </div>
-  )
+  //console.log('creating videoPane')
+  return <video src="{videoConfig}" />
 }
 
 export default function HocBook() {
+  //console.log('making HocBook');
   const [index, setIndex] = useState(0);
-  let twinPane = hocBookBits[index];
-
-  console.log('embedableParley', window.embedableParley);
+  let twinPane = hocBookBits[0];
 
   function handleClickNext() {
     setIndex((index === (numHocPages - 1)) ? 0 : (index + 1));
@@ -63,8 +58,6 @@ export default function HocBook() {
   function handleClickPrev() {
     setIndex((index === 0) ? (numHocPages - 1) : (index - 1));
   }
-
-  // console.log('hc index is', index);
 
   let leftPane = createLeftPane(twinPane.lessonText);
   let rightPane;
@@ -77,17 +70,44 @@ export default function HocBook() {
     rightPane = createVideoPane(twinPane.videoConfig);
   }
 
-  console.log('leftPane is', leftPane);
-  console.log('rightPane is', rightPane);
+  //console.log('hc index is', index);
+  //console.log('leftPane is', leftPane);
+  //console.log('rightPane is', rightPane);
 
   return (
     <>
+    <div id="banner">
+      <img src="images/icon.png" height="50" />
+      <span>Bootstrap :: Winter Hour of Code</span>
+    </div>
+    <div id="progressbar" style={{width: (index + 1) * (100 / numHocPages) + "%"}}></div>
     <h1>HoC Winter Parley</h1>
-    <button onClick={handleClickPrev}>Prev</button>
-    <button onClick={handleClickNext}>Next</button>
-    <h2>({index+1} of {numHocPages})</h2>
-    {leftPane}
-    {rightPane}
+    <main>
+      <div id="buttons">
+        <button id="prev"
+                onClick={handleClickPrev}
+                disabled={index>0? '' : 'yes'}>
+          «
+        </button>
+        <button id="next"
+                onClick={handleClickNext}
+                disabled={index < hocBookBits.length - 1? '' : 'yes'}>
+          »
+        </button>
+      </div>
+      <h2>({index+1} of {numHocPages})</h2>
+      <div id="pages">
+        <div id="leftPane">
+          {leftPane}
+        </div>
+        <div id="rightPane">
+          {rightPane}
+        </div>
+      </div>
+    </main>
+    <div id="footer">
+      <a href="https://www.BootstrapWorld.org">Bootstrap</a> is brought to you by the <a href="https://www.BootstrapWorld.org/community">Bootstrap Team</a>. Special thanks to <a href="http://www.ProgramByDesign.org">Program by Design</a> and <a href="https://www.Brown.edu">Brown University</a>.
+    </div>
     </>
   );
 
