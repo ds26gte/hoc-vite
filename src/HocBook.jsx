@@ -1,16 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
-
+import { makeEmbed } from 'pyret-embed';
 import { hocBookBits } from './hocBookBits';
 
 let parley;
 
 const numHocPages = hocBookBits.length;
 
-// function clearLoadingScreenAndRun() {
-//   document.getElementById('righthand').style.opacity = 1;
-//   document.getElementById('loadingScreen').classList.add('loaded');
-//   parley.run();
-// }
 
 function createLeftPane(lessonText) {
   //console.log('doing createLeftPane of', lessonText);
@@ -27,12 +22,8 @@ function createEditorPane(editorCode) {
   
   // if the ref has been rendered (i.e. - has a current node),
   // render parley into it
-  useEffect(() => {
-    if (containerRef.current) {
-      let parley = window.embedableParley.renderParley(containerRef.current);
-      parley.resetChunks(editorCode.trim().split("\n") || [""]);
-      parley.onReady(parley.run);
-    }
+  useEffect( () => {
+    makeEmbed("Embedded Editor", containerRef.current, "https://pyret-horizon.herokuapp.com/editor")
   }, [containerRef, editorCode]);
   
   return <div ref={containerRef} />
