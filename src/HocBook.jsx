@@ -18,11 +18,13 @@ function createLeftPane(lessonText) {
 }
 
 function createEditorPane(editorCode) {
-  //console.log('creating editorPane')
+  console.log('creating editorPane')
+
+  // return <div>{editorCode}</div>;
 
   // create a ref, so that we can render into the DOM
   const containerRef = useRef(null);
-
+  
   // if the ref has been rendered (i.e. - has a current node),
   // render parley into it
   useEffect(() => {
@@ -31,25 +33,25 @@ function createEditorPane(editorCode) {
       parley.resetChunks(editorCode.trim().split("\n") || [""]);
       parley.onReady(parley.run);
     }
-  }, [containerRef]);
-
+  }, [containerRef, editorCode]);
+  
   return <div ref={containerRef} />
 }
 
 function createImagePane(imageConfig) {
-  //console.log('creating imagePane')
+  // console.log('creating imagePane')
   return <img src={imageConfig} />
 }
 
 function createVideoPane(videoConfig) {
-  //console.log('creating videoPane')
+  // console.log('creating videoPane')
   return <video src="{videoConfig}" />
 }
 
 export default function HocBook() {
   //console.log('making HocBook');
   const [index, setIndex] = useState(0);
-  let twinPane = hocBookBits[0];
+  let twinPane = hocBookBits[index];
 
   function handleClickNext() {
     setIndex((index === (numHocPages - 1)) ? 0 : (index + 1));
@@ -60,19 +62,15 @@ export default function HocBook() {
   }
 
   let leftPane = createLeftPane(twinPane.lessonText);
-  let rightPane;
+  let rightPane = twinPane.editorCode ?
+    createEditorPane(twinPane.editorCode) :
+    twinPane.imageConfig ?
+    createImagePane(twinPane.imageConfig) :
+    createVideoPane(twinPane.videoConfig);
 
-  if (twinPane.editorCode) {
-    rightPane = createEditorPane(twinPane.editorCode);
-  } else if (twinPane.imageConfig) {
-    rightPane = createImagePane(twinPane.imageConfig);
-  } else if (twinPane.videoConfig) {
-    rightPane = createVideoPane(twinPane.videoConfig);
-  }
-
-  //console.log('hc index is', index);
-  //console.log('leftPane is', leftPane);
-  //console.log('rightPane is', rightPane);
+  // console.log('hc index is', index);
+  // console.log('lessonText is', twinPane.lessonText);
+  // console.log('editorCode is', twinPane.editorCode);
 
   return (
     <>
