@@ -12,7 +12,7 @@ function createLeftPane(lessonText) {
   return <div dangerouslySetInnerHTML={{__html: lessonText}} />
 }
 
-function createEditorPane(editorCode) {
+async function createEditorPane(editorCode) {
   console.log('creating editorPane')
 
   // return <div>{editorCode}</div>;
@@ -23,10 +23,31 @@ function createEditorPane(editorCode) {
   // if the ref has been rendered (i.e. - has a current node),
   // render parley into it
   useEffect( () => {
-    makeEmbed("Embedded Editor", containerRef.current, "https://pyret-horizon.herokuapp.com/editor")
+
+
+    // const embed = makeEmbed("Embedded Editor", containerRef.current, "https://pyret-horizon.herokuapp.com/editor")
+
+    const code = `use context starter2024\n\n`;
+
+    const embed = await makeEmbed("Embedded Editor", containerRef.current);
+
+    console.log('embed=', embed);
+
+    embed.sendReset({
+      definitionsAtLastRun: code,
+      interactionsSinceLastRun: editorCode,
+      editorContents: code,
+      replContents: "",
+    });
+
+
+
+    // let iframeContainer = document.getElementById("hocbookid");
+    // makeEmbed("Embedded Editor", iframeContainer)
+
   }, [containerRef, editorCode]);
   
-  return <div ref={containerRef} />
+  return <div id="hocbookid" ref={containerRef} />
 }
 
 function createImagePane(imageConfig) {
@@ -39,7 +60,7 @@ function createVideoPane(videoConfig) {
   return <video src="{videoConfig}" />
 }
 
-export default function HocBook() {
+export default async function HocBook() {
   //console.log('making HocBook');
   const [index, setIndex] = useState(0);
   let twinPane = hocBookBits[index];
@@ -54,7 +75,7 @@ export default function HocBook() {
 
   let leftPane = createLeftPane(twinPane.lessonText);
   let rightPane = twinPane.editorCode ?
-    createEditorPane(twinPane.editorCode) :
+    await createEditorPane(twinPane.editorCode) :
     twinPane.imageConfig ?
     createImagePane(twinPane.imageConfig) :
     createVideoPane(twinPane.videoConfig);
