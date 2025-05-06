@@ -2,7 +2,6 @@ export const hocBookBits =
   [
     // page 1
     { editorCode: `
-include essentials2021
 text("Hello!", 200, "purple")
         `,
       lessonText: `
@@ -33,7 +32,6 @@ text("Hello!", 200, "purple")
 
     // page 2
     { editorCode: `
-include essentials2021
 `, 
       lessonText: `
           <h1>2. Coding Images</h1>
@@ -57,7 +55,6 @@ include essentials2021
     },
 
     { editorCode: `
-include essentials2021
 star(50, "outline", "fuchsia")
 `,
       lessonText: `
@@ -76,7 +73,6 @@ star(50, "outline", "fuchsia")
     },
 
     { editorCode: `
-include essentials2021
 star(50, "solid", "blue")
 rectangle(50, "solid", "blue")
 `,
@@ -98,7 +94,6 @@ rectangle(50, "solid", "blue")
     },
 
     { editorCode: `
-include essentials2021
 rectangle(50, 100, "solid", "orange")
 `,
       lessonText: `
@@ -115,7 +110,6 @@ rectangle(50, 100, "solid", "orange")
     },
 
     { editorCode: `
-include essentials2021
 
 `,
       lessonText: `
@@ -144,7 +138,6 @@ include essentials2021
     },
 
     { editorCode: `
-include essentials2021
 nose = isosceles-triangle(100, 340, "solid", "orange")
 `,
       lessonText: `
@@ -163,7 +156,6 @@ nose = isosceles-triangle(100, 340, "solid", "orange")
     },
 
     { editorCode: `
-include essentials2021
 head = circle(6, "outline", "darkgray")
 torso = circle(8, "outline", "darkgray")
 base = circle(10, "outline", "darkgray")
@@ -186,7 +178,6 @@ base = circle(10, "outline", "darkgray")
     },
 
     { editorCode: `
-include essentials2021
 brim = rectangle(70, 15, "solid", "black")
 `,
       lessonText: `
@@ -203,7 +194,6 @@ brim = rectangle(70, 15, "solid", "black")
     },
 
     { editorCode: `
-include essentials2021
 eye-white = circle(30, "solid", "lightgray")
 pupil = circle(10, "solid", "black")
 `,
@@ -227,7 +217,6 @@ pupil = circle(10, "solid", "black")
     },
 
     { editorCode: `
-include essentials2021
 eye-white = circle(30, "outline", "black")
 pupil = circle(10, "solid", "black")
 `,
@@ -252,7 +241,6 @@ pupil = circle(10, "solid", "black")
     },
 
     { editorCode: `
-include essentials2021
 eye-white = circle(30, "outline", "black")
 pupil = circle(10, "solid", "black")
 translate(pupil, 10, 30, eye-white)
