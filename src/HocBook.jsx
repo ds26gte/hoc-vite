@@ -6,14 +6,13 @@ let parley;
 
 const numHocPages = hocBookBits.length;
 
-
 function createLeftPane(lessonText) {
-  //console.log('doing createLeftPane of', lessonText);
+  // console.log('doing createLeftPane of', lessonText);
   return <div dangerouslySetInnerHTML={{__html: lessonText}} />
 }
 
 function createEditorPane(editorCode) {
-  console.log('creating editorPane')
+  // console.log('creating editorPane')
 
   // return <div>{editorCode}</div>;
 
@@ -26,7 +25,7 @@ function createEditorPane(editorCode) {
 
     async function makeEditor(title, node) {
       // prepend the context (although I don't think we actually want to do this!)
-      const definitionsCode = `use context starter2024\n\n${editorCode}`;
+      // const definitionsCode = `use context starter2024\n\n${editorCode}`;
 
       // If this node already has an editor, use that. Otherwise make a new one
       const embed = containerRef.current.editor
@@ -37,7 +36,7 @@ function createEditorPane(editorCode) {
 
       // set the editor
       embed.sendReset({
-        definitionsAtLastRun: definitionsCode,
+        definitionsAtLastRun: editorCode,
         interactionsSinceLastRun: "",
         editorContents: "",
         replContents: "",
@@ -65,15 +64,17 @@ function createVideoPane(videoConfig) {
 }
 
 export default function HocBook() {
-  console.log('making HocBook');
+  // console.log('making HocBook');
   const [index, setIndex] = useState(0);
   let twinPane = hocBookBits[index];
 
   function handleClickNext() {
+    // console.log('doing clicknext');
     setIndex((index === (numHocPages - 1)) ? 0 : (index + 1));
   }
 
   function handleClickPrev() {
+    // console.log('doing clickprev');
     setIndex((index === 0) ? (numHocPages - 1) : (index - 1));
   }
 
