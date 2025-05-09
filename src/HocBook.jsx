@@ -86,13 +86,15 @@ function createVideoPane(videoConfig) {
   return <video src="{videoConfig}" />
 }
 
-export function addToEditor(x) {
+export async function addToEditor(x) {
   // console.log('doing addToEditor', x);
   const containerRef = window.containerRef; // checks?
   // console.log('containerRef=', containerRef);
   const embed = containerRef.current.editor; // 〃
   // console.log('embed=', embed);
-  embed.setInteractions(x.trim());
+  embed.runDefinitions();
+  embed.setInteractions(x.trim() + '\n');
+  await embed.runInteractionResult();
 }
 
 export function HocBook() {
