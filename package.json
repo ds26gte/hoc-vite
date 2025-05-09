@@ -10,9 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "pyret-embed": "git://github.com/jpolitz/pyret-embed-examples",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "pyret-embed": "git://github.com/jpolitz/pyret-embed-examples"
+    "react-loader-spinner": "^6.1.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

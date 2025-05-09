@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { makeEmbed } from 'pyret-embed';
 import { hocBookBits } from './hocBookBits';
+import { RotatingLines } from "react-loader-spinner";
 
 let parley;
 
@@ -16,7 +17,8 @@ function createLeftPane(lessonText) {
 function createEditorPane(editorCode) {
   // console.log('creating editorPane', editorCode);
 
-  // return <div>{editorCode}</div>;
+  // state for showing loading indicator
+  const [isLoading, setIsLoading] = useState(true);
 
   // create a ref, so that we can render into the DOM
   const containerRef = useRef(null);
@@ -29,11 +31,13 @@ function createEditorPane(editorCode) {
 
     async function makeEditor(title, node) {
       // prepend the context (although I don't think we actually want to do this!)
-      // const definitionsCode = `use context starter2024\n\n${editorCode}`;
 
       // If this node already has an editor, use that. Otherwise make a new one
       const embed = containerRef.current.editor
         || await makeEmbed("Embedded Editor", containerRef.current, "https://pyret-horizon.herokuapp.com/editor")
+
+      // hide the loading indicator
+      setIsLoading(false);
 
       // Save the editor to the node
       containerRef.current.editor = embed;
@@ -53,8 +57,23 @@ function createEditorPane(editorCode) {
     // makeEmbed("Embedded Editor", iframeContainer)
 
   }, [containerRef, editorCode]);
-  
-  return <div id="hocbookid" ref={containerRef} />
+  const spinner = isLoading? (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <RotatingLines
+          strokeColor="grey"
+          strokeWidth="5"
+          animationDuration="0.75"
+          width="96"
+          visible={true}
+        />
+      </div>
+    ) : null;
+
+  return (
+    <div>
+      {spinner}
+      <div id="hocbookid" ref={containerRef} style={{display:isLoading? "none" : "unset"}}></div>
+    </div>);
 }
 
 function createImagePane(imageConfig) {
