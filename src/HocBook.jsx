@@ -11,13 +11,17 @@ function createLeftPane(lessonText) {
   return <div dangerouslySetInnerHTML={{__html: lessonText}} />
 }
 
+
+
 function createEditorPane(editorCode) {
-  // console.log('creating editorPane')
+  // console.log('creating editorPane', editorCode);
 
   // return <div>{editorCode}</div>;
 
   // create a ref, so that we can render into the DOM
   const containerRef = useRef(null);
+
+  window.containerRef = containerRef;
   
   // if the ref has been rendered (i.e. - has a current node),
   // render parley into it
@@ -63,7 +67,16 @@ function createVideoPane(videoConfig) {
   return <video src="{videoConfig}" />
 }
 
-export default function HocBook() {
+export function addToEditor(x) {
+  // console.log('doing addToEditor', x);
+  const containerRef = window.containerRef; // checks?
+  // console.log('containerRef=', containerRef);
+  const embed = containerRef.current.editor; // 〃
+  // console.log('embed=', embed);
+  embed.setInteractions(x);
+}
+
+export function HocBook() {
   // console.log('making HocBook');
   const [index, setIndex] = useState(0);
   let twinPane = hocBookBits[index];
