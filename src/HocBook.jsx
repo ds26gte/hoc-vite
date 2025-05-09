@@ -42,7 +42,7 @@ function createEditorPane(editorCode) {
       embed.sendReset({
         definitionsAtLastRun: editorCode,
         interactionsSinceLastRun: "",
-        editorContents: "",
+        editorContents: editorCode,
         replContents: "",
       });
     }
@@ -73,7 +73,7 @@ export function addToEditor(x) {
   // console.log('containerRef=', containerRef);
   const embed = containerRef.current.editor; // 〃
   // console.log('embed=', embed);
-  embed.setInteractions(x);
+  embed.setInteractions(x.trim());
 }
 
 export function HocBook() {
@@ -93,7 +93,7 @@ export function HocBook() {
 
   let leftPane = createLeftPane(twinPane.lessonText);
   let rightPane = twinPane.editorCode ?
-    createEditorPane(twinPane.editorCode) :
+    createEditorPane(twinPane.editorCode.trim()) :
     twinPane.imageConfig ?
     createImagePane(twinPane.imageConfig) :
     createVideoPane(twinPane.videoConfig);
