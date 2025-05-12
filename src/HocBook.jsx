@@ -15,7 +15,7 @@ function createLeftPane(lessonText) {
 
 
 function createEditorPane(editorCode) {
-  // console.log('creating editorPane', editorCode);
+  console.log('creating editorPane', editorCode);
 
   // state for showing loading indicator
   const [isLoading, setIsLoading] = useState(true);
@@ -77,13 +77,23 @@ function createEditorPane(editorCode) {
 }
 
 function createImagePane(imageConfig) {
-  // console.log('creating imagePane')
-  return <img src={imageConfig} />
+  console.log('creating imagePane', imageConfig)
+  return (
+    <div>
+    blank image text
+    </div>
+  );
+  // return <img src={imageConfig} />
 }
 
 function createVideoPane(videoConfig) {
-  // console.log('creating videoPane')
-  return <video src="{videoConfig}" />
+  console.log('creating videoPane', videoConfig)
+  return (
+    <div>
+    blank video text
+    </div>
+  );
+  // return <video src="{videoConfig}" />
 }
 
 export async function addToEditor(x) {
