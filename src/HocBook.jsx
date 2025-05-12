@@ -87,6 +87,7 @@ const ImagePane = ({config}) => {
 }
 
 const VideoPane = ({config}) => {
+  console.log('creating VideoPane', config);
   return (
     <video controls autoplay>
       <source src={config} type="video/mp4" />
@@ -127,7 +128,7 @@ export function HocBook() {
   } else if(twinPane.videoConfig) {
     rightPane = <VideoPane config={twinPane.videoConfig} />
   } else if(twinPane.imageConfig) {
-    rightPane = <VideoPane config={twinPane.imageConfig} />
+    rightPane = <ImagePane config={twinPane.imageConfig} />
   } else {
     throw "Invalid configuration provided: "+JSON.stringify(twinPane, null, 2);
   }
