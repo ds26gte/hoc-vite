@@ -14,7 +14,7 @@ function createLeftPane(lessonText) {
 
 
 
-function createEditorPane(editorCode) {
+const EditorPane = ({editorCode}) => {
   console.log('creating editorPane', editorCode);
 
   // state for showing loading indicator
@@ -83,26 +83,16 @@ function createEditorPane(editorCode) {
     </div>);
 }
 
-function createImagePane(imageConfig) {
+const ImagePane = (imageConfig) => {
   console.log('creating imagePane', imageConfig)
-  // return (
-  //   <div>
-  //   blank image text
-  //   </div>
-  // );
   return ( <img src={imageConfig} /> );
 }
 
-function createVideoPane(videoConfig) {
-  // console.log('creating videoPane', videoConfig)
-  // return (
-  //   <div>
-  //   blank video text
-  //   </div>
-  // );
-  return ( <video controls autoplay>
-    <source src={videoConfig} type="video/mp4" />
-    </video> );
+const VideoPane = (videoConfig) => {
+  return (
+    <video controls autoplay>
+      <source src={videoConfig} type="video/mp4" />
+    </video>);
 }
 
 export async function addToEditor(x) {
@@ -132,21 +122,18 @@ export function HocBook() {
   }
 
   let leftPane = createLeftPane(twinPane.lessonText);
+  let rightPane;
 
-  let rightPaneE0 = createEditorPane(twinPane.editorCode ?
-    twinPane.editorCode.trim() : '');
-  let rightPaneE = (twinPane.editorCode ? rightPaneE0 : null);
+  if(twinPane.editorCode) {
+    rightPane = <EditorPane editorCode={twinPane.editorCode.trim()}/>
+  } else if(twinPane.videoConfig) {
+    rightPane = <VideoPane videoConfig={twinPane.videoConfig} />
+  } else if(twinPane.imageConfig) {
+    rightPane = <VideoPane videoConfig={twinPane.imageConfig} />
+  } else {
+    throw "Invalid configuration provided: "+JSON.stringify(twinPane, null, 2);
+  }
 
-  let rightPaneV = (twinPane.videoConfig ?
-    createVideoPane(twinPane.videoConfig) : null);
-  let rightPaneI = (twinPane.imageConfig ?
-    createImagePane(twinPane.imageConfig) : null);
-
-  // let rightPane = twinPane.editorCode ?
-  //   createEditorPane(twinPane.editorCode.trim()) :
-  //   twinPane.imageConfig ?
-  //   createImagePane(twinPane.imageConfig) :
-  //   createVideoPane(twinPane.videoConfig);
 
   // console.log('hc index is', index);
   // console.log('lessonText is', twinPane.lessonText);
@@ -179,7 +166,7 @@ export function HocBook() {
           {leftPane}
         </div>
         <div id="rightPane">
-          {rightPaneE}{rightPaneI}{rightPaneV}
+          {rightPane}
         </div>
       </div>
     </main>
