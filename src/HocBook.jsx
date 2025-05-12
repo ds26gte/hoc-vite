@@ -14,8 +14,8 @@ function createLeftPane(lessonText) {
 
 
 
-const EditorPane = ({editorCode}) => {
-  console.log('creating editorPane', editorCode);
+const EditorPane = ({config}) => {
+  console.log('creating editorPane', config);
 
   // state for showing loading indicator
   const [isLoading, setIsLoading] = useState(true);
@@ -50,20 +50,18 @@ const EditorPane = ({editorCode}) => {
       // set the editor
       if (embed) {
         embed.sendReset({
-          definitionsAtLastRun: editorCode,
+          definitionsAtLastRun: config,
           interactionsSinceLastRun: "",
-          editorContents: editorCode,
+          editorContents: config,
           replContents: "",
         });
       }
     }
 
     makeEditor();
+  }, [containerRef, config]);
 
-    // let iframeContainer = document.getElementById("hocbookid");
-    // makeEmbed("Embedded Editor", iframeContainer)
-
-  }, [containerRef, editorCode]);
+  // the "loading" spinner, which is null if we're done loading
   const spinner = isLoading? (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <RotatingLines
@@ -83,15 +81,15 @@ const EditorPane = ({editorCode}) => {
     </div>);
 }
 
-const ImagePane = (imageConfig) => {
-  console.log('creating imagePane', imageConfig)
-  return ( <img src={imageConfig} /> );
+const ImagePane = ({config}) => {
+  console.log('creating imagePane', config)
+  return ( <img src={config} /> );
 }
 
-const VideoPane = (videoConfig) => {
+const VideoPane = ({config}) => {
   return (
     <video controls autoplay>
-      <source src={videoConfig} type="video/mp4" />
+      <source src={config} type="video/mp4" />
     </video>);
 }
 
@@ -125,11 +123,11 @@ export function HocBook() {
   let rightPane;
 
   if(twinPane.editorCode) {
-    rightPane = <EditorPane editorCode={twinPane.editorCode.trim()}/>
+    rightPane = <EditorPane config={twinPane.editorCode.trim()}/>
   } else if(twinPane.videoConfig) {
-    rightPane = <VideoPane videoConfig={twinPane.videoConfig} />
+    rightPane = <VideoPane config={twinPane.videoConfig} />
   } else if(twinPane.imageConfig) {
-    rightPane = <VideoPane videoConfig={twinPane.imageConfig} />
+    rightPane = <VideoPane config={twinPane.imageConfig} />
   } else {
     throw "Invalid configuration provided: "+JSON.stringify(twinPane, null, 2);
   }
