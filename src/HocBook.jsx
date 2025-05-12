@@ -32,23 +32,30 @@ function createEditorPane(editorCode) {
     async function makeEditor(title, node) {
       // prepend the context (although I don't think we actually want to do this!)
 
+      // console.log('doing makeEditor');
+
       // If this node already has an editor, use that. Otherwise make a new one
-      const embed = containerRef.current.editor
-        || await makeEmbed("Embedded Editor", containerRef.current, "https://pyret-horizon.herokuapp.com/editor")
+      const embed = (!containerRef.current ? null :
+        (containerRef.current.editor ||
+          await makeEmbed("Embedded Editor", containerRef.current, "https://pyret-horizon.herokuapp.com/editor")));
 
       // hide the loading indicator
       setIsLoading(false);
 
       // Save the editor to the node
-      containerRef.current.editor = embed;
+      if (containerRef.current) {
+        containerRef.current.editor = embed;
+      }
 
       // set the editor
-      embed.sendReset({
-        definitionsAtLastRun: editorCode,
-        interactionsSinceLastRun: "",
-        editorContents: editorCode,
-        replContents: "",
-      });
+      if (embed) {
+        embed.sendReset({
+          definitionsAtLastRun: editorCode,
+          interactionsSinceLastRun: "",
+          editorContents: editorCode,
+          replContents: "",
+        });
+      }
     }
 
     makeEditor();
@@ -78,22 +85,24 @@ function createEditorPane(editorCode) {
 
 function createImagePane(imageConfig) {
   console.log('creating imagePane', imageConfig)
-  return (
-    <div>
-    blank image text
-    </div>
-  );
-  // return <img src={imageConfig} />
+  // return (
+  //   <div>
+  //   blank image text
+  //   </div>
+  // );
+  return ( <img src={imageConfig} /> );
 }
 
 function createVideoPane(videoConfig) {
-  console.log('creating videoPane', videoConfig)
-  return (
-    <div>
-    blank video text
-    </div>
-  );
-  // return <video src="{videoConfig}" />
+  // console.log('creating videoPane', videoConfig)
+  // return (
+  //   <div>
+  //   blank video text
+  //   </div>
+  // );
+  return ( <video controls autoplay>
+    <source src={videoConfig} type="video/mp4" />
+    </video> );
 }
 
 export async function addToEditor(x) {
@@ -123,11 +132,21 @@ export function HocBook() {
   }
 
   let leftPane = createLeftPane(twinPane.lessonText);
-  let rightPane = twinPane.editorCode ?
-    createEditorPane(twinPane.editorCode.trim()) :
-    twinPane.imageConfig ?
-    createImagePane(twinPane.imageConfig) :
-    createVideoPane(twinPane.videoConfig);
+
+  let rightPaneE0 = createEditorPane(twinPane.editorCode ?
+    twinPane.editorCode.trim() : '');
+  let rightPaneE = (twinPane.editorCode ? rightPaneE0 : null);
+
+  let rightPaneV = (twinPane.videoConfig ?
+    createVideoPane(twinPane.videoConfig) : null);
+  let rightPaneI = (twinPane.imageConfig ?
+    createImagePane(twinPane.imageConfig) : null);
+
+  // let rightPane = twinPane.editorCode ?
+  //   createEditorPane(twinPane.editorCode.trim()) :
+  //   twinPane.imageConfig ?
+  //   createImagePane(twinPane.imageConfig) :
+  //   createVideoPane(twinPane.videoConfig);
 
   // console.log('hc index is', index);
   // console.log('lessonText is', twinPane.lessonText);
@@ -160,7 +179,7 @@ export function HocBook() {
           {leftPane}
         </div>
         <div id="rightPane">
-          {rightPane}
+          {rightPaneE}{rightPaneI}{rightPaneV}
         </div>
       </div>
     </main>
