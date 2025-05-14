@@ -1,10 +1,16 @@
 export const hocBookBits =
   [
     // page 1
-    { editorCode: `
+    { editorCode: {
+      definitionsAtLastRun: `
 use context starter2024
 text("Hello!", 200, "purple")
-        `,
+        ` ,
+      editorContents: `
+use context starter2024
+text("Hello!", 200, "purple")
+        `
+    },
       lessonText: `
 
         <h1>1. Welcome to Bootstrap's Hour of Code!</h1>
@@ -32,9 +38,10 @@ text("Hello!", 200, "purple")
     },
 
     // page 2
-    { editorCode: `
-use context starter2024
-`, 
+    { editorCode: {
+      definitionsAtLastRun: `use context starter2024`,
+      editorContents: `use context starter2024`,
+    },
       lessonText: `
           <h1>2. Coding Images</h1>
           What do you think the following code will do?
@@ -56,10 +63,16 @@ use context starter2024
           `
     },
 
-    { editorCode: `
+    { editorCode: {
+      definitionsAtLastRun: `
 use context starter2024
 star(50, "outline", "fuchsia")
 `,
+      editorContents: `
+use context starter2024
+star(50, "outline", "fuchsia")
+`,
+    },
       lessonText: `
         <h1>3. More Shape Functions!</h1>
           There are lots of other functions that will produce an image... and some of them take the same arguments as <tt>star</tt>:  <i> a Number and two Strings.</i>
@@ -75,11 +88,18 @@ star(50, "outline", "fuchsia")
           `
     },
 
-    { editorCode: `
+    { editorCode: {
+      definitionsAtLastRun: `
 use context starter2024
 star(50, "solid", "blue")
 rectangle(50, "solid", "blue")
 `,
+      editorContents: `
+use context starter2024
+star(50, "solid", "blue")
+rectangle(50, "solid", "blue")
+`,
+    },
       lessonText: `
           <h1>4. What about Errors?!</h1>
           There are also image-producing functions that need more arguments than <tt>star</tt>, <tt>circle</tt>, <tt>triangle</tt>, or <tt>square</tt>.
@@ -97,10 +117,16 @@ rectangle(50, "solid", "blue")
           `
     },
 
-    { editorCode: `
+    { editorCode: {
+      definitionsAtLastRun: `
 use context starter2024
 rectangle(50, 100, "solid", "orange")
 `,
+      editorContents: `
+use context starter2024
+rectangle(50, 100, "solid", "orange")
+`,
+    },
       lessonText: `
           <h1>5. What Makes Rectangles Different?</h1>
           <p/>
@@ -114,10 +140,14 @@ rectangle(50, 100, "solid", "orange")
           `
     },
 
-    { editorCode: `
+    { editorCode: {
+      definitionsAtLastRun: `
 use context starter2024
-
 `,
+      editorContents: `
+use context starter2024
+`,
+    },
       lessonText: `
           <h1>6. More Images</h1>
 
@@ -143,10 +173,16 @@ use context starter2024
           `
     },
 
-    { editorCode: `
+    { editorCode: {
+      definitionsAtLastRun: `
 use context starter2024
 nose = isosceles-triangle(100, 340, "solid", "orange")
 `,
+      editorContents: `
+use context starter2024
+nose = isosceles-triangle(100, 340, "solid", "orange")
+`,
+    },
       lessonText: `
           <h1>7. Defining Functions</h1>
 
@@ -162,12 +198,20 @@ nose = isosceles-triangle(100, 340, "solid", "orange")
             `
     },
 
-    { editorCode: `
+    { editorCode: {
+      definitionsAtLastRun: `
 use context starter2024
 head = circle(6, "outline", "darkgray")
 torso = circle(8, "outline", "darkgray")
 base = circle(10, "outline", "darkgray")
 `,
+      editorContents: `
+use context starter2024
+head = circle(6, "outline", "darkgray")
+torso = circle(8, "outline", "darkgray")
+base = circle(10, "outline", "darkgray")
+`,
+    },
       lessonText: `
           <h1>8. Composing Functions</h1>
           <ol>
@@ -185,10 +229,16 @@ base = circle(10, "outline", "darkgray")
           `
     },
 
-    { editorCode: `
+    { editorCode: {
+      definitionsAtLastRun: `
 use context starter2024
 brim = rectangle(70, 15, "solid", "black")
 `,
+      editorContents: `
+use context starter2024
+brim = rectangle(70, 15, "solid", "black")
+`,
+    },
       lessonText: `
           <h1>9. Composing a Top Hat</h1>
 
@@ -202,11 +252,18 @@ brim = rectangle(70, 15, "solid", "black")
           `
     },
 
-    { editorCode: `
+    { editorCode: {
+      definitionsAtLastRun: `
 use context starter2024
 eye-white = circle(30, "solid", "lightgray")
 pupil = circle(10, "solid", "black")
 `,
+      editorContents: `
+use context starter2024
+eye-white = circle(30, "solid", "lightgray")
+pupil = circle(10, "solid", "black")
+`,
+    },
       lessonText: `
 
           <h1>10. Overlaying Images</h1>
@@ -226,11 +283,18 @@ pupil = circle(10, "solid", "black")
           `
     },
 
-    { editorCode: `
+    { editorCode: {
+      definitionsAtLastRun: `
 use context starter2024
 eye-white = circle(30, "outline", "black")
 pupil = circle(10, "solid", "black")
 `,
+      editorContents: `
+use context starter2024
+eye-white = circle(30, "outline", "black")
+pupil = circle(10, "solid", "black")
+`,
+    },
       lessonText: `
           <h1>11. Placing Images Using Coordinates</h1>
 
@@ -251,12 +315,20 @@ pupil = circle(10, "solid", "black")
              `
     },
 
-    { editorCode: `
+    { editorCode: {
+      definitionsAtLastRun: `
 use context starter2024
 eye-white = circle(30, "outline", "black")
 pupil = circle(10, "solid", "black")
 translate(pupil, 10, 30, eye-white)
 `,
+      editorContents: `
+use context starter2024
+eye-white = circle(30, "outline", "black")
+pupil = circle(10, "solid", "black")
+translate(pupil, 10, 30, eye-white)
+`,
+    },
       lessonText: `
           <h1>12. Making Googley Eyes</h1>
           <ol>

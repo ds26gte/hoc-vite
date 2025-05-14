@@ -49,12 +49,14 @@ const EditorPane = ({config}) => {
 
       // set the editor
       if (embed) {
-        embed.sendReset({
-          definitionsAtLastRun: config,
+        const config0 = {
+          definitionsAtLastRun: "",
           interactionsSinceLastRun: "",
-          editorContents: config,
+          editorContent: "",
           replContents: "",
-        });
+        };
+
+        embed.sendReset({...config0, ...config});
       }
     }
 
@@ -124,7 +126,7 @@ export function HocBook() {
   let rightPane;
 
   if(twinPane.editorCode) {
-    rightPane = <EditorPane config={twinPane.editorCode.trim()}/>
+    rightPane = <EditorPane config={twinPane.editorCode}/>
   } else if(twinPane.videoConfig) {
     rightPane = <VideoPane config={twinPane.videoConfig} />
   } else if(twinPane.imageConfig) {
