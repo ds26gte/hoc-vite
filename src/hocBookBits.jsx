@@ -341,7 +341,7 @@ translate(pupil, 10, 30, eye-white)
             `
     },
 
-    { videoConfig: "images/eye.mov",
+    { videoConfig: "videos/eye.mov",
       lessonText: `
           <h1>13. Full Pyret</h1>
 
