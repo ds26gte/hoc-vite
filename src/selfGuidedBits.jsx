@@ -1,4 +1,6 @@
-export const hocBookBits =
+export const selfGuidedTitle = 'Hoc Winter Parley'
+
+export const selfGuidedBits =
   [
     // page 1
     { editorCode: {

@@ -1,18 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
 import { makeEmbed } from 'pyret-embed';
-import { hocBookBits } from './hocBookBits';
+import { selfGuidedBits, selfGuidedTitle } from './selfGuidedBits';
 import { RotatingLines } from "react-loader-spinner";
 
-let parley;
-
-const numHocPages = hocBookBits.length;
+const numSelfGuidedPages = selfGuidedBits.length;
 
 function createLeftPane(lessonText) {
   // console.log('doing createLeftPane of', lessonText);
   return <div dangerouslySetInnerHTML={{__html: lessonText}} />
 }
-
-
 
 const EditorPane = ({config}) => {
   console.log('creating editorPane', config);
@@ -79,7 +75,7 @@ const EditorPane = ({config}) => {
   return (
     <div>
       {spinner}
-      <div id="hocbookid" ref={containerRef} style={{display:isLoading? "none" : "unset"}}></div>
+      <div id="selfGuidedId" ref={containerRef} style={{display:isLoading? "none" : "unset"}}></div>
     </div>);
 }
 
@@ -107,19 +103,21 @@ export async function addToEditor(x) {
   await embed.runInteractionResult();
 }
 
-export function HocBook() {
-  // console.log('making HocBook');
+window.addToEditor = addToEditor
+
+export function SelfGuided() {
+  // console.log('making SelfGuided');
   const [index, setIndex] = useState(0);
-  let twinPane = hocBookBits[index];
+  let twinPane = selfGuidedBits[index];
 
   function handleClickNext() {
     // console.log('doing clicknext');
-    setIndex((index === (numHocPages - 1)) ? 0 : (index + 1));
+    setIndex((index === (numSelfGuidedPages - 1)) ? 0 : (index + 1));
   }
 
   function handleClickPrev() {
     // console.log('doing clickprev');
-    setIndex((index === 0) ? (numHocPages - 1) : (index - 1));
+    setIndex((index === 0) ? (numSelfGuidedPages - 1) : (index - 1));
   }
 
   let leftPane = createLeftPane(twinPane.lessonText);
@@ -146,8 +144,8 @@ export function HocBook() {
       <img src="images/icon.png" height="50" />
       <span>Bootstrap :: Winter Hour of Code</span>
     </div>
-    <div id="progressbar" style={{width: (index + 1) * (100 / numHocPages) + "%"}}></div>
-    <h1>HoC Winter Parley</h1>
+    <div id="progressbar" style={{width: (index + 1) * (100 / numSelfGuidedPages) + "%"}}></div>
+    <h1>{selfGuidedTitle}</h1>
     <main>
       <div id="buttons">
         <button id="prev"
@@ -157,11 +155,11 @@ export function HocBook() {
         </button>
         <button id="next"
                 onClick={handleClickNext}
-                disabled={index < hocBookBits.length - 1? '' : 'yes'}>
+                disabled={index < selfGuidedBits.length - 1? '' : 'yes'}>
           »
         </button>
       </div>
-      <h2>({index+1} of {numHocPages})</h2>
+      <h2>({index+1} of {numSelfGuidedPages})</h2>
       <div id="pages">
         <div id="leftPane">
           {leftPane}
